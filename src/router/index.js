@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Login, Home } from "../screens";
+import { Login, Home, LoginFB } from "../screens";
 
 const Stack = createStackNavigator();
 
 const Router = () => {
   return (
     <Stack.Navigator
-      initialRouteName='Login'
+      initialRouteName='LoginFB'
     >
       <Stack.Screen 
         name="Login" 
@@ -19,6 +19,13 @@ const Router = () => {
       <Stack.Screen 
         name="Home" 
         component={Home}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="LoginFB" 
+        component={LoginFB}
         options={{
           headerShown: false
         }}

@@ -6,9 +6,11 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
+import { 
+  LoginButton
+} from "react-native-fbsdk";
 
 const Login = ({navigation}) => {
-  const [user, setUser] = useState([]);
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -19,6 +21,10 @@ const Login = ({navigation}) => {
     });
   }, []);
 
+  // const facebookLogin = async () => {
+    
+  // };
+
   const signIn = async () => {
     try {
       // const { idToken } = await GoogleSignin.signIn();
@@ -27,11 +33,15 @@ const Login = ({navigation}) => {
       await GoogleSignin.hasPlayServices();
       const info = await GoogleSignin.signIn();
       const token = await GoogleSignin.getTokens();
-      setUser(info.user.id);
-      console.log('data user', info.user.id);
+      const user = {
+        id: info.user.id,
+        name: info.user.name,
+        email: info.user.email,
+        photo: info.user.photo,
+      };
       console.log('data user', user);
       console.log('token', token.accessToken);
-      navigation.replace('Home', info.user);
+      navigation.replace('Home', user);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -50,7 +60,7 @@ const Login = ({navigation}) => {
     <View>
       <Text>Login Page</Text>
       <GoogleButton onPress={signIn} />
-      <FacebookButton/>
+      {/* <FacebookButton onPress={facebookLogin} /> */}
     </View>
   )
 }
