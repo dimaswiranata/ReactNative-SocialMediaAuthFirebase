@@ -1,13 +1,15 @@
 import FacebookButton from './FacebookButton';
 import GoogleButton from './GoogleButton';
-import GoogleLogout from './GoogleLogout';
+import Logout from './Logout';
 import FacebookLogout from './FacebookLogout';
+import Profile from './Profile';
 import Gap from './Gap';
 
 export {
   FacebookButton,
   GoogleButton,
-  GoogleLogout,
+  Logout,
   FacebookLogout,
-  Gap
+  Gap,
+  Profile
 };
