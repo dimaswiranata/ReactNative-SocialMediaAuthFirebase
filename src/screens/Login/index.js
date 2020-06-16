@@ -7,7 +7,11 @@ import {
   statusCodes,
 } from '@react-native-community/google-signin';
 import { 
-  LoginButton
+  LoginButton,
+  AccessToken,
+  LoginManager,
+  GraphRequest,
+  GraphRequestManager
 } from "react-native-fbsdk";
 
 const Login = ({navigation}) => {
@@ -21,15 +25,49 @@ const Login = ({navigation}) => {
     });
   }, []);
 
-  // const facebookLogin = async () => {
-    
-  // };
+  const initUser = (token) => {
+    fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends,picture.type(large)&access_token=' + token)
+    .then((response) => response.json())
+    .then((json) => {
+      const user = {
+        id: json.id,
+        name: json.name,
+        email: json.email,
+        photo: json.picture.data.url,
+        type: 'facebook'
+      };
+      console.log('user', user);
+      navigation.replace('Home', user);
+    })
+    .catch(() => {
+      reject('ERROR GETTING DATA FROM FACEBOOK')
+    })
+  }
 
-  const signIn = async () => {
+  const FacebookLogin = async () => {
+    LoginManager.logInWithPermissions(["email","public_profile"])
+      .then((res) => {
+        console.log('result: ', res);
+        if (res.isCancelled) {
+          console.log("Login cancelled");
+        } else {
+          console.log("Login success with permissions: ", res.grantedPermissions.toString());
+          AccessToken
+            .getCurrentAccessToken()
+            .then((data) => {
+              const { accessToken } = data;
+              initUser(accessToken);
+            })
+        }
+      })
+      .catch((err) => {
+        console.log('error: ', err.message);
+      });
+  };
+
+
+  const GoogleSignIn = async () => {
     try {
-      // const { idToken } = await GoogleSignin.signIn();
-      // const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      // console.log('googleCredential', googleCredential);
       await GoogleSignin.hasPlayServices();
       const info = await GoogleSignin.signIn();
       const token = await GoogleSignin.getTokens();
@@ -38,6 +76,7 @@ const Login = ({navigation}) => {
         name: info.user.name,
         email: info.user.email,
         photo: info.user.photo,
+        type: 'google'
       };
       console.log('data user', user);
       console.log('token', token.accessToken);
@@ -59,8 +98,8 @@ const Login = ({navigation}) => {
   return (
     <View>
       <Text>Login Page</Text>
-      <GoogleButton onPress={signIn} />
-      {/* <FacebookButton onPress={facebookLogin} /> */}
+      <GoogleButton onPress={GoogleSignIn} />
+      <FacebookButton onPress={FacebookLogin} />
     </View>
   )
 }

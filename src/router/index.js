@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 const Router = () => {
   return (
     <Stack.Navigator
-      initialRouteName='LoginFB'
+      initialRouteName='Login'
     >
       <Stack.Screen 
         name="Login" 
