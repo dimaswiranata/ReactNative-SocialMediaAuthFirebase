@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Text, Image } from 'react-native'
-import { GoogleLogout, FacebookLogout } from "../../components";
+import { View, StyleSheet } from 'react-native'
+import { Logout, Profile, Gap } from "../../components";
 import {
   GoogleSignin
 } from '@react-native-community/google-signin';
@@ -31,21 +31,36 @@ const Home = ({route, navigation}) => {
   };
 
   return (
-    <View>
-      <Text>Home Page</Text>
-      <Text>User ID: {user.id}</Text>
-      <Text>User Name: {user.name}</Text>
-      <Text>User Email: {user.email}</Text>
-      <Image style={{height: 100, width: 100}} source={{uri: user.photo}}/>
+    <View style={styles.screen}>
+      <View style={styles.container}>
+        <Profile 
+          name={user.name}
+          user_id={user.id}
+          email={user.email}
+          photo={user.photo} 
+        />
+      </View>
+      <Gap height={16}/>
       {
         user.type === 'google' ? (
-          <GoogleLogout onPress={GoogleSignOut}/>
+          <Logout title='Log Out' onPress={GoogleSignOut}/>
         ) : (
-          <FacebookLogout onPress={FacebookSignOut}/>
+          <Logout title='Log Out' onPress={FacebookSignOut}/>
         )
       }
     </View>
   )
 }
 
-export default Home
+export default Home;
+
+const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: 'white',
+    flex: 1,
+    padding: 16
+  },
+  container: {
+    flex: 1
+  }
+});
