@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import { FacebookButton, GoogleButton } from '../../components';
+import { View, Text, StyleSheet } from 'react-native';
+import { FacebookButton, GoogleButton, Gap } from '../../components';
 import {
   GoogleSignin,
-  GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
 import { 
-  LoginButton,
   AccessToken,
   LoginManager,
-  GraphRequest,
-  GraphRequestManager
 } from "react-native-fbsdk";
 
 const Login = ({navigation}) => {
@@ -96,12 +92,27 @@ const Login = ({navigation}) => {
 
 
   return (
-    <View>
-      <Text>Login Page</Text>
+    <View style={styles.screen}>
+      <Text style={styles.text}>Social Login</Text>
+      <Gap height={10}/>
       <GoogleButton onPress={GoogleSignIn} />
+      <Gap height={10}/>
       <FacebookButton onPress={FacebookLogin} />
     </View>
   )
 }
 
-export default Login
+export default Login;
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold'
+  }
+})

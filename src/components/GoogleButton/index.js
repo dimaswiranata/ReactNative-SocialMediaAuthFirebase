@@ -1,15 +1,12 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native';
-import {
-  GoogleSigninButton,
-} from '@react-native-community/google-signin';
+import { TouchableOpacity, Image } from 'react-native';
 
 const GoogleButton = ({onPress}) => {
   return (
     <TouchableOpacity 
       onPress={onPress}
     >
-      <GoogleSigninButton/>
+      <Image style={{width: 290, height: 50}} source={require('../../assets/button/google.png')}/>
     </TouchableOpacity>
   )
 }

@@ -1,14 +1,12 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { TouchableOpacity, Image } from 'react-native'
 
 const FacebookButton = ({onPress}) => {
   return (
     <TouchableOpacity 
       onPress={onPress}
     >
-      <Text>
-        Login With Facebook
-      </Text>
+      <Image style={{width: 290, height: 50}} source={require('../../assets/button/facebook.png')}/>
     </TouchableOpacity>
   )
 }
